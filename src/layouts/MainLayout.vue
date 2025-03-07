@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="bg-teal-4">
         <q-btn
           flat
           dense
@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          SysVet
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -51,47 +51,29 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Usuários',
+    caption: 'Lista usuários do sistema',
+    icon: 'people',
+    link: '/usuarios'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Animais',
+    caption: 'Lista animais',
+    icon: 'fa fa-paw',
+    link: '/animais'
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Exames',
+    caption: 'Lista Exames',
+    icon: 'fa fa-table',
+    link: '/exames'
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Consultas',
+    caption: 'Lista Consultas',
+    icon: 'fa fa-notes-medical',
+    link: '/consultas'
   },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
 ]
 
 export default defineComponent({
