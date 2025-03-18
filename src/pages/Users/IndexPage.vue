@@ -24,6 +24,7 @@
           <td class="text-left"> {{ item.created_at }}</td>
           <td class="text-left">
             <q-btn color="purple" icon="edit" :to="'/usuarios/editar/' + item.id" />
+            <q-btn class="q-ml-sm" @click="deletar(item.id)" color="red" icon="delete" />
           </td>
         </tr>
       </tbody>
@@ -49,6 +50,17 @@ export default{
     async getData(){
       const usuarios = await UserService.listarTudo()
       this.users = usuarios.data
+    },
+    async deletar(id){
+      const confirmacao = confirm('Tem certeza que deseja remover esse usuário?')
+      if(confirmacao){
+        const response = await UserService.deletar(id)
+        if(response.status == '200'){
+          alert('Usuário removido com sucesso!')
+        }
+        this.getData()
+      }
+
     }
   }
 };

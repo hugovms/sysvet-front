@@ -42,7 +42,10 @@ export default {
   methods: {
     // axios
     async saveData () {
-      await UserService.create(this.form)
+      const response = await UserService.criar(this.form)
+      if(response.status == '201'){
+        this.$router.push('/usuarios')
+      }
     }
   }
 };
