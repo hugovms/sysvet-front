@@ -54,19 +54,19 @@ const linksList = [
     title: 'Usuários',
     caption: 'Lista usuários do sistema',
     icon: 'people',
-    link: '/usuarios'
+    link: '/#/usuarios'
   },
   {
     title: 'Animais',
     caption: 'Lista animais',
     icon: 'fa fa-paw',
-    link: '/animais'
+    link: '/#/animais'
   },
   {
     title: 'Exames',
     caption: 'Lista Exames',
     icon: 'fa fa-table',
-    link: '/exames'
+    link: '/#/exames'
   },
   {
     title: 'Consultas',

@@ -36,6 +36,7 @@
 <script>
 import UserService from 'src/services/UserService';
 import { ref } from 'vue';
+import Swal from 'sweetalert2'
 
 export default{
   setup(){
@@ -52,14 +53,34 @@ export default{
       this.users = usuarios.data
     },
     async deletar(id){
-      const confirmacao = confirm('Tem certeza que deseja remover esse usuário?')
-      if(confirmacao){
-        const response = await UserService.deletar(id)
-        if(response.status == '200'){
-          alert('Usuário removido com sucesso!')
+      Swal.fire({
+        title: "Você tem certeza?",
+        text: "Essa ação será irreversível!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, deletar!"
+      }).then( async (result) => {
+        if (result.isConfirmed) {
+          const response = await UserService.deletar(id)
+          if(response.status == '200'){
+            Swal.fire({
+              title: "Removido com sucesso!",
+              text: "O registro foi excluído.",
+              icon: "success"
+            });
+          }else{
+            Swal.fire({
+              title: "Erro ao remover o item!",
+              text: "O registro não foi excluído.",
+              icon: "error"
+            });
+          }
+          this.getData()
+
         }
-        this.getData()
-      }
+      });
 
     }
   }
