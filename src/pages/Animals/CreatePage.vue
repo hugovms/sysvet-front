@@ -14,11 +14,13 @@
             class="row full-width"
              @submit="saveData()"
             >
-            <div class="col-md-12 q-pa-xs q-mt-md q-mb-md">
+            <div class="col-md-12 col-sm-12 col-xs-12  q-pa-xs q-mt-md q-mb-md">
               <q-uploader
-                  @uploaded="arquivoEnviado()"
+                  @uploaded="arquivoEnviado"
                   url="http://localhost:8000/api/upload"
                   class="full-width"
+                  max-files="1"
+                  auto-upload
                 />
             </div>
               <div class="col-md-6 col-xs-6 q-pa-xs">
@@ -32,13 +34,21 @@
               </div>
               <div class="col-md-6 col-xs-6 q-pa-xs">
                   <q-select
+                    :rules="[ val => val && val.length > 0 || 'o Tipo do Animal não pode ser vazio!']"
+                    outlined
+                    v-model="form.tipo_animal"
+                    :options="optionsTipoAnimal"
+                  />
+              </div>
+              <div class="col-md-6 col-xs-6 q-pa-xs">
+                  <q-select
                     :rules="[ val => val && val.length > 0 || 'A raça não pode ser vazio!']"
                     outlined
                     v-model="form.raca"
                     :options="optionsRaca"
                   />
               </div>
-              <div class="col-md-3 col-xs-3 q-pa-xs">
+              <div class="col-md-3 col-sm-6 col-xs-6 col-xs-3 q-pa-xs">
                   <q-input
                           lazy-rules
                           :rules="[val => val && val.length > 0 || 'A idade não pode ser vazia!']"
@@ -46,9 +56,9 @@
                           label="Idade"
                           suffix="Anos"
                           type="text"
-                          v-model="form.telefone" outlined/>
+                          v-model="form.idade" outlined/>
               </div>
-              <div class="col-md-3 col-xs-3 q-pa-xs">
+              <div class="col-md-3 col-sm-6 col-xs-6 col-xs-3 q-pa-xs">
                   <q-input
                             lazy-rules
                             :rules="[val => val && val.length > 0 || 'O peso não pode ser vazio!']"
@@ -59,7 +69,7 @@
                             v-model="form.peso"
                             outlined/>
               </div>
-              <div class="col-md-6 col-xs-6 q-pa-xs">
+              <div class="col-md-6 col-xs-12 col-sm-12 q-pa-xs">
                   <q-select
                     :rules="[ val => val && val.length > 0 || 'O dono não pode ser vazio!']"
                     outlined
@@ -67,17 +77,18 @@
                     :options="optionsDono"
                   />
               </div>
-              <div class="col-md-12 col-xs-3 q-pa-xs">
+              <div class="col-md-12 col-sm-12 col-xs-12  col-xs-3 q-pa-xs">
                   <q-input
                             lazy-rules
                             :rules="[val => val && val.length > 0 || 'A descrição não pode ser vazio!']"
                             label="Descrição"
                             type="text"
-                            v-model="form.decricao"
+                            v-model="form.descricao"
                             outlined/>
               </div>
               <div class="col-md-12 col-xs-12 q-pa-xs">
                 <q-btn
+                        @click="saveData()"
                         type="submit"
                         color="green-10"
                         label="SALVAR"
@@ -95,15 +106,22 @@
 import { ref } from 'vue';
 import AnimalService from 'src/services/AnimalService';
 import UserService from 'src/services/UserService'
-
+import { useQuasar } from 'quasar'
 
 export default {
   setup () {
+    const $q = useQuasar()
     const optionsRaca = [
         'Labrador',
         'Pinscher',
         'Maltês',
         'Pastor Alemão'
+    ]
+    const optionsTipoAnimal = [
+        'Gato',
+        'Cachorro',
+        'Ave',
+        'Réptil'
     ]
 
     const form = ref({
@@ -117,7 +135,9 @@ export default {
       dono_id: '',
     })
       return {
+        $q,
         form,
+        optionsTipoAnimal,
         optionsRaca,
         optionsDono: ref([])
       }
@@ -126,8 +146,14 @@ export default {
     this.getUsers()
   },
   methods: {
-    arquivoEnviado(){
-      alert('Imagem enviada com sucesso!');
+    arquivoEnviado(info){
+      const formatedData = JSON.parse(info.files[0].xhr.response);
+      this.form.imagem = formatedData.file;
+      this.$q.notify({
+        'type': 'positive',
+        'message': 'O arquivo foi enviado com sucesso!',
+        'position': 'top-right'
+      })
     },
     // axios
     async getUsers(){
@@ -139,6 +165,7 @@ export default {
       })
     },
     async saveData () {
+      this.form.dono_id = this.form.dono.value;
       const response = await AnimalService.criar(this.form)
       if(response.status == '201'){
         this.$router.push('/animais')

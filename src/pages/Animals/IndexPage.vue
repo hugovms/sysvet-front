@@ -1,4 +1,4 @@
-<template>
+  <template>
   <q-page >
     <div class="q-pa-md">
     <div class="row full-width">
@@ -8,19 +8,26 @@
       <thead>
         <tr>
           <th class="text-left">ID</th>
+          <th class="text-left">Imagem</th>
           <th class="text-left">Nome</th>
-          <th class="text-left">Email</th>
-          <th class="text-left">Telefone</th>
-          <th class="text-left">Criação</th>
+          <th class="text-left">Tipo</th>
+          <th class="text-left">Raça</th>
+          <th class="text-left">Dono</th>
           <th class="text-left">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, i) in users" :key="i">
           <td class="text-left">{{ item.id }}</td>
-          <td class="text-left"> {{ item.name }}</td>
-          <td class="text-left"> {{ item.email }}</td>
-          <td class="text-left"> {{ item.created_at }}</td>
+          <td class="text-left">
+            <q-avatar>
+              <q-img :src="item.imagem" :ratio="1/1"/>
+            </q-avatar>
+          </td>
+          <td class="text-left"> {{ item.nome }}</td>
+          <td class="text-left"> {{ item.tipo_animal }}</td>
+          <td class="text-left"> {{ item.raca }}</td>
+          <td class="text-left"> {{ item.dono.name }}</td>
           <td class="text-left">
             <q-btn color="purple" icon="edit" :to="'/animais/editar/' + item.id" />
             <q-btn class="q-ml-sm" @click="deletar(item.id)" color="red" icon="delete" />
