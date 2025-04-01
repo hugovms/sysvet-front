@@ -11,6 +11,9 @@ const routes = [
       { path: '/animais', component: () => import('src/pages/Animals/IndexPage.vue') },
       { path: '/animais/criar', component: () => import('src/pages/Animals/CreatePage.vue') },
       { path: '/animais/editar/:id', component: () => import('src/pages/Animals/UpdatePage.vue') },
+
+      //consultas
+      { path: '/consultas', component: () => import('src/pages/Consultas/IndexPage.vue')}
     ]
   },
 

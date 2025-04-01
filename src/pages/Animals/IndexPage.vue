@@ -21,7 +21,7 @@
           <td class="text-left">{{ item.id }}</td>
           <td class="text-left">
             <q-avatar>
-              <q-img :src="item.imagem" :ratio="1/1"/>
+              <q-img :src="item.imagem" :ratio="1/1" />
             </q-avatar>
           </td>
           <td class="text-left"> {{ item.nome }}</td>
